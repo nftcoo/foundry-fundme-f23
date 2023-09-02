@@ -1,66 +1,43 @@
-## Foundry
+This project is an attempt at the Foundry Fund Me lesson from Patrick Collins' course on Solidity, Blockchain Development and Smart Contracts, accessed at the youtube link below:
+https://www.youtube.com/watch?v=sas02qSFZ74
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+Getting Started
+Requirements
+git
+foundry
 
-Foundry consists of:
+Usage
+Deploy
+forge script script/DeployFundMe.s.sol
 
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+Testing
+We use unit and forked tests in this repo
+forge test
+Test covergage
+forge coverage
 
-## Documentation
+Deployment
+Set up environment variables in your .env filr including:
+SEPLOLIA_RPC_URL
+PRIVATE_KEY (don't use an address with real funds)
+ETHERSCAN_API_KEY if you want to verify your contract
+Deploy:
+forge script script/DeployFundMe.s.sol --rpc-url $SEPOLIA_RPC_URL --private-key $PRIVATE_KEY --broadcast --verify --etherscan-api-key $ETHERSCAN_API_KEY
 
-https://book.getfoundry.sh/
+Scripts
+After deploying to a testnet or local net, you can run the scripts.
 
-## Usage
+Using cast deployed locally example:
+cast send <FUNDME_CONTRACT_ADDRESS> "fund()" --value 0.1ether --private-key <PRIVATE_KEY>
+or
+forge script script/Interactions.s.sol --rpc-url sepolia  --private-key $PRIVATE_KEY  --broadcast
 
-### Build
+Withdraw
+cast send <FUNDME_CONTRACT_ADDRESS> "withdraw()"  --private-key <PRIVATE_KEY>
 
-```shell
-$ forge build
-```
+Estimate gas
+You can estimate how much gas things cost by running:
+forge snapshot
+And you'll see an output file called .gas-snapshot
 
-### Test
-
-```shell
-$ forge test
-```
-
-### Format
-
-```shell
-$ forge fmt
-```
-
-### Gas Snapshots
-
-```shell
-$ forge snapshot
-```
-
-### Anvil
-
-```shell
-$ anvil
-```
-
-### Deploy
-
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
-
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
+Thank You!
